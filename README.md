@@ -61,7 +61,7 @@ vision-sentinel/
 ├── Dockerfile          # Custom image definition
 ├── docker-compose.yml  # Multi-container orchestration
 └── requirements.txt    # Production dependencies
-
+```
 ## 🛠️ Tech Stack
 
 - **Languages:** Python 3.12  
