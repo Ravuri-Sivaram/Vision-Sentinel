@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # The Database (Redis)
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  # The Waiter (FastAPI)
+  api:
+    build: .
+    command: python3 -m uvicorn src.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
+  # The Chef (Celery Worker)
+  worker:
+    build: .
+    command: python3 -m celery -A src.tasks worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
